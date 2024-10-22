@@ -23,7 +23,7 @@ package persistencia;
                     System.exit(1);
                 }
             }
-            return bd;
+            return bd;//teste
 
         }
     }
