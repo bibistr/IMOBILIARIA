@@ -27,7 +27,7 @@ public class Cad_Corretor {
             s+= this.corretores.get(i)+"\n";
         }
 
-        return s;
+        return s;   //CLASSE CADASTRO DE CORRETORES. FOI CRIADA PARA FACILITAR, JA QUE COM ELA É NECESSÁRIA A CRIAÇÃO DE APENAS 1 ARRAYLIST :)
     }
 
 }

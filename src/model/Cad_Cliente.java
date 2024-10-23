@@ -24,9 +24,9 @@ public class Cad_Cliente {
          for(int i = 1; i<this.clientes.size(); i++){
             s+= this.clientes.get(i)+"\n";
          }
-         return s;
+         return s;  //CLASSE CADASTRO DE CLIENTES. FOI CRIADA PARA FACILITAR, JA QUE COM ELA É NECESSÁRIA A CRIAÇÃO DE APENAS 1 ARRAYLIST :)
     }
-    
+
 
 
 
