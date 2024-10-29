@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import model.Corretor;
 
 public class CorretorDAO{
-    private conection bd;
+    private Conection bd;
 
-    public corretorDAO() {
+    public CorretorDAO() {
         this.bd = BancoDeDados.getBd();
     }
 
