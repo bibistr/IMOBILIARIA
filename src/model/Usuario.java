@@ -14,7 +14,7 @@ public class Usuario {
 
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
     public void setNome(String nome) {
         this.nome = nome;
@@ -22,7 +22,7 @@ public class Usuario {
 
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
     public void setEmail(String email) {
         this.email = email;
@@ -30,7 +30,7 @@ public class Usuario {
 
 
     public String getTel() {
-        return tel;
+        return this.tel;
     }
     public void setTel(String tel) {
         this.tel = tel;

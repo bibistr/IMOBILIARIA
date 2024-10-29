@@ -5,13 +5,12 @@ package model;
     private String creci;
 
     Corretor(String nome_corretor, String email_corretor, String tel_corretor, String creci){
-        
         super(nome_corretor,email_corretor, tel_corretor);
         this.creci = creci;
     }
 
     public String getCreci() {
-        return creci;
+        return this.creci;
     }
     public void setCreci(String creci) {
         this.creci = creci;
