@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import model.Cliente;
 
 public class ClienteDAO{
-    private connection bd;
+    private Connection bd;
 
     public ClienteDAO() {
         this.bd = BancoDeDados.getBd();
     }
 
-    public voide create(Cliente c) throws SQLException {
+    public void create(Cliente c) throws SQLException {
         String query = "INSERT INTO cliente VALUES(null,?, ?, ?, ?, ?, ? )";
         PreparedStatement st = this.bd.prepareStatement(query);
         st.setString(1, c.getNome());
@@ -24,7 +24,7 @@ public class ClienteDAO{
         st.setString(3, c.getTel());
         st.setString(4, c.getData_nasc());
         st.setString(5, c.getCpf());
-        st.executeUpdate
+        st.executeUpdate();
     }
 
     public ArrayList<Cliente> getAll() throws SQLException {

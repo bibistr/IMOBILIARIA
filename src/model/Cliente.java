@@ -1,6 +1,6 @@
 package model;
 
-class Cliente extends Usuario{
+public class Cliente extends Usuario{
 
  private String data_nasc;
  private String cpf;
