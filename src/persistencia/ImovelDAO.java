@@ -38,10 +38,10 @@ public class ImovelDAO {
 			String endereco = res.getString("endereco");
 			String tipo = res.getString("tipo");
 			String descricao = res.getString("descricao");
-            double area = res.getDouble("area");
-            double valor_venda = res.getDouble("valor_venda");
-            double valor_aluguel = res.getDouble("valor_aluguel");
-            int ano_construcao = res.getInt("ano_construcao"); // INT !!!
+            String area =  res.getString("area");
+            String valor_venda = res.getString("valor_venda");
+            String valor_aluguel = res.getString("valor_aluguel");
+            String ano_construcao = res.getString("ano_construcao"); // INT !!!
 			Imovel i = new Imovel(endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
 			lista.add(i);
 		}
