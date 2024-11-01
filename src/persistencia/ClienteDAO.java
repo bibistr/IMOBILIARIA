@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import model.Cliente;
 
 public class ClienteDAO{
@@ -25,23 +24,34 @@ public class ClienteDAO{
         st.setString(4, c.getData_nasc());
         st.setString(5, c.getCpf());
         st.executeUpdate();
+
+        try (ResultSet generatedKeys = st.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
+                c.setId_cliente(idGerado); //
+            } else {
+                throw new SQLException("Falha ao obter o ID gerado.");
+            }
+        }
     }
 
     public ArrayList<Cliente> getAll() throws SQLException {
-        ArrayList<Cliente> lista = new ArrayList<Cliente>();
-        String query = "SELECT nome, email, tel, data_nasc, cpf, endereco FROM cliente";
+        ArrayList<Cliente> lista = new ArrayList<>();
+        String query = "SELECT id_cliente, nome, email, tel, data_nasc, cpf, endereco FROM cliente";
         PreparedStatement st = this.bd.prepareStatement(query);
         ResultSet res = st.executeQuery();
         while(res.next()) {
-            String nome = res.getString("nome");
-            String email = res.getString("email");
-            String tel = res.getString("tel");
+            int id_cliente = res.getInt("id_cliente");
+            String nome_cliente = res.getString("nome");
+            String email_cliente = res.getString("email");
+            String tel_cliente = res.getString("tel");
             String data_nasc = res.getString("data_nasc");
             String cpf =  res.getString("cpf");
             String endereco = res.getString("endereco");
-            Cliente c = new Cliente(nome, email, tel, data_nasc, cpf, endereco);
+            Cliente c = new Cliente(id_cliente, nome_cliente, email_cliente, tel_cliente, data_nasc, cpf, endereco);
             lista.add(c);
         }
         return lista;
     }
+
 }

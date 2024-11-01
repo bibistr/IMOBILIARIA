@@ -9,20 +9,29 @@ import java.util.ArrayList;
 import model.Corretor;
 
 public class CorretorDAO{
-    private Conection bd;
+    private Connection bd;
 
     public CorretorDAO() {
         this.bd = BancoDeDados.getBd();
     }
 
-    public void create (Corretor c) throws SQLException {
+    public void create (Corretor cor) throws SQLException {
         String query = "INSERT INTO corretor VALUES(null, ?, ?, ?, ?)";
-        prepareStatement st = this.bd.prepareStatement(query);
-        st.setString(1, c.getNome());
-        st.setString(2, c.getEmail());
-        st.setString(3, c.getTel());
-        st.setString(4, c.getCreci());
+        PreparedStatement st = this.bd.prepareStatement(query);
+        st.setString(1, cor.getNome());
+        st.setString(2, cor.getEmail());
+        st.setString(3, cor.getTel());
+        st.setString(4, cor.getCreci());
         st.executeUpdate();
+    
+        try (ResultSet generatedKeys = st.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
+                cor.setId_corretor(idGerado); //
+            } else {
+                throw new SQLException("Falha ao obter o ID gerado.");
+            }
+        }
     }
 
     public ArrayList<Corretor> getAll() throws SQLException {
@@ -31,12 +40,13 @@ public class CorretorDAO{
         PreparedStatement st = this.bd.prepareStatement(query);
         ResultSet res = st.executeQuery();
         while (res.next()) {
-            String nome = res.getString("nome");
-            String email = res.getString("email");
-            String tel = res.getString("tel");
+            int id_corretor = res.getInt("id_corretor");
+            String nome_corretor = res.getString("nome");
+            String email_corretor = res.getString("email");
+            String tel_corretor = res.getString("tel");
             String creci = res.getString("creci");
-            Corretor c = new Corretor(nome, email, tel, creci);
-            lista.add(c);
+            Corretor cor = new Corretor(id_corretor, nome_corretor, email_corretor, tel_corretor, creci);
+            lista.add(cor);
         }
         return lista;
     }
