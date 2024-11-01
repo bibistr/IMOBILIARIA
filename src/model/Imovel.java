@@ -2,11 +2,12 @@ package model;
 
 public class Imovel {
 
+    private int id_imovel;
     private String endereco, tipo, descricao;
     private double area, valor_venda, valor_aluguel;
     private int ano_construcao;
 
-    public Imovel (String endereco, String tipo, String descricao, double area, double valor_venda, double valor_aluguel, int ano_construcao) {
+    public Imovel (int id_imovel, String endereco, String tipo, String descricao, double area, double valor_venda, double valor_aluguel, int ano_construcao) {
         this.endereco = endereco;
         this.tipo = tipo;
         this.descricao = descricao;
@@ -14,8 +15,15 @@ public class Imovel {
         this.valor_venda = valor_venda;
         this.valor_aluguel = valor_aluguel;
         this.ano_construcao = ano_construcao;
+        this.id_imovel = id_imovel;
     }
 
+    public int getId_imovel() {
+        return this.id_imovel;
+    }
+    public void setId_imovel(int id_imovel) {
+        this.id_imovel = id_imovel;
+    }
 
     public String getEndereco() {
         return this.endereco;
@@ -74,7 +82,7 @@ public class Imovel {
 
     @Override
     public String toString() {
-return "" + "Endereço: " + getEndereco() + ", " + "Imóvel: " + getTipo() + ", Descrição: " + getDescricao() + ", Ano de construção: " + getAno_construcao() + ", Área: " + getArea() + ", valor do imóvel à venda: " + getValor_venda() + ", valor locação: " + getValor_aluguel();
+return "" + getId_imovel() + ", " + "Endereço: " + getEndereco() + ", " + "Imóvel: " + getTipo() + ", Descrição: " + getDescricao() + ", Ano de construção: " + getAno_construcao() + ", Área: " + getArea() + ", valor do imóvel à venda: " + getValor_venda() + ", valor locação: " + getValor_aluguel();
     }
 
 }//
