@@ -35,6 +35,8 @@ public class ContratoDAO {
         }
     }
 
+    
+
     public ArrayList<Contrato> getAll() throws SQLException {
         ArrayList<Contrato> listaContratos = new ArrayList<>();
         String query = "SELECT id_contrato, id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao FROM contrato";
@@ -54,4 +56,4 @@ public class ContratoDAO {
         return listaContratos;
     }
 
-}
+} /
