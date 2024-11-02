@@ -26,6 +26,6 @@ package persistencia;
             return bd;//teste
 
         }
-    }                                //SEM ALTERAÕES./
+    }                                //SEM ALTERAÕES.//
 
 

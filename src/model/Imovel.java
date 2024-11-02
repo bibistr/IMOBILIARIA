@@ -85,4 +85,4 @@ public class Imovel {
 return "" + getId_imovel() + ", " + "Endereço: " + getEndereco() + ", " + "Imóvel: " + getTipo() + ", Descrição: " + getDescricao() + ", Ano de construção: " + getAno_construcao() + ", Área: " + getArea() + ", valor do imóvel à venda: " + getValor_venda() + ", valor locação: " + getValor_aluguel();
     }
 
-}/
+}//

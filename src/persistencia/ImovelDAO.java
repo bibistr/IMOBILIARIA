@@ -28,7 +28,7 @@ public class ImovelDAO {
 
         try (ResultSet generatedKeys = st.getGeneratedKeys()) {
             if (generatedKeys.next()) {
-                int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
+                int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado//
                 i.setId_imovel(idGerado); //
             } else {
                 throw new SQLException("Falha ao obter o ID gerado.");

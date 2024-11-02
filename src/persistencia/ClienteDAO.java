@@ -63,7 +63,7 @@ public class ClienteDAO{
                """;
 
                PreparedStatement st = this.prepareStatement(query);
-               st.setString(1, "%" + n + "%")
+               st.setString(1, "%" + n + "%");
                ResultSet res = st.executeQuery();
                while(res.next()) {
                 String nome = res.getString("nome");
@@ -72,8 +72,8 @@ public class ClienteDAO{
                 String tel = res.getString("tel");
                 String data_nasc = res.getString("data_nasc");
                 String cpf = res.getString("cpf");
-                Cliente p = new Cliente(nome,endereco,email, tel, data_nasc, cpf);
-                lista.add()
+                Cliente c = new Cliente(nome,endereco,email, tel, data_nasc, cpf);
+                lista.add(c);
                }
                return lista;
     }
@@ -111,4 +111,4 @@ public class ClienteDAO{
         }
         return lista_geral;
     }
-}
+}//

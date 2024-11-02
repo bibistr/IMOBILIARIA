@@ -29,7 +29,7 @@ package model;
     public String toString() {
         return "" + getId_corretor() + ", " + getNome() + ", " + getCreci() + ", E-mail: " + getEmail() + ", Telefone: " + getTel();
     }
-// SEM ALTERAÇÕES
+// SEM ALTERAÇÕES//
 
 
 }//

@@ -15,7 +15,7 @@ public class LocacaoDAO {
     }
 
     public void create(Locacao l) throws SQLException {
-        String query = "INSERT INTO l (id_cliente, id_imovel, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO locacao (id_cliente, id_imovel, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
         PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         st.setInt(1, l.getId_cliente());
         st.setInt(2, l.getId_imovel());

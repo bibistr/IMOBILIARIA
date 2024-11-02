@@ -68,4 +68,4 @@ public class Contrato {
                 + getId_imovel() + ", data de início do contrato: " + getData_inicio() + ", data do fim do contrato: "
                 + getData_fim() + "porcentagem a pagar: " + getComissao();
     }
-}//
+}///
