@@ -37,14 +37,14 @@ public class ClienteDAO{
 
 
   //UPDATE 
-    public update(Cliente c) throws SQLException {
+    public void update(Cliente c) throws SQLException {
         String query = """
-        UPDATE ciente
+        UPDATE cliente
         SET nome  = ?, endereco = ?, tel = ?, email = ?
         WHERE cpf = ?
         """;
     
-    PreparedStatement st = this.bd,prepareStatement(query);
+    PreparedStatement st = this.bd.prepareStatement(query);
     st.setString(1, c.getNome());
     st.setString(2, c.getEndereco());
     st.setString(3, c.getEmail());
@@ -55,24 +55,24 @@ public class ClienteDAO{
 
 // READ/CONSULTA
     public ArrayList<Cliente>findByNomeLike(String n) throws SQLException {
-        ArrayList<Cliente> lista = new ArrayList<Cliente>();
+        ArrayList<Cliente> lista = new ArrayList<>();
         String query = """
-               SELECT endereco, email, tel, data_nasc, cpf
-               FROM cliente
+               SELECT * FROM cliente
                WHERE nome LIKE ?"
                """;
 
-               PreparedStatement st = this.prepareStatement(query);
+               PreparedStatement st = this.bd.prepareStatement(query);
                st.setString(1, "%" + n + "%");
                ResultSet res = st.executeQuery();
                while(res.next()) {
+                int id_cliente = res.getInt("id_cliente");
                 String nome = res.getString("nome");
-                String endereco = res.getString("endereco")
+                String endereco = res.getString("endereco");
                 String email = res.getString("email");
                 String tel = res.getString("tel");
                 String data_nasc = res.getString("data_nasc");
                 String cpf = res.getString("cpf");
-                Cliente c = new Cliente(nome,endereco,email, tel, data_nasc, cpf);
+                Cliente c = new Cliente(id_cliente, nome,endereco,email, tel, data_nasc, cpf);
                 lista.add(c);
                }
                return lista;
@@ -81,9 +81,9 @@ public class ClienteDAO{
 
     // DELETE
     public void delete(Cliente c) throws SQLException {
-        String query """
+        String query = """
         DELETE FROM cliente
-        WHERE cpf = ?
+        WHERE cpf = ?"
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
         st.setString(1, c.getCpf());
