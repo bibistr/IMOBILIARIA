@@ -36,6 +36,59 @@ public class ImovelDAO {
         }
     }
 
+    //UPDATE
+    public void update (Imovel i) throws SQLException {
+        String query = """
+        UPDATE imovel
+        SET  endereco = ?, tipo = ?, descricao = ?, area = ?, valor_venda = ?, valor_aluguel = ?, ano construcao = ?
+        WHERE  id_imovel = ?
+        """;
+        PreparedStatement st = this.bd.prepareStatement(query);
+        st.setString(1, i.getEndereco());
+        st.setString(2, i.getTipo());
+        st.setString(3, i.getDescricao());
+        st.setDouble(4, i.getArea());
+        st.setDouble(5, i.getValor_venda());
+        st.setDouble(6, i.getValor_aluguel());
+        st.setInt(7, i.getAno_construcao());
+        st.executeUpdate();
+    }
+
+    //READ
+    public ArrayList<Imovel>findByNomeLike(String t ) throws SQLException {
+        ArrayList<Imovel> lista = new ArrayList<>();
+        String query = """
+        SELECT id_ imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano construcao
+        WHERE tipo LIKE ?
+        """;
+        PreparedStatement st = this.bd.prepareStatement(query);
+        st.setString(1, "%" + t + "%");
+        ResultSet res = st.executeQuery();
+        while(res.next()) {
+            int id_imovel = res.getInt("id_imovel");
+            String endereco= res.getString("endereco");
+            String tipo = res.getString("tipo");
+            String descricao= res.getString("descricao");
+            double area = res.getDouble("area");
+            double valor_venda = res.getDouble("valor_venda");
+            double valor_aluguel = res.getDouble("valor_aluguel");
+            int ano_construcao = res.getInt("ano_construcao");
+            Imovel i = new Imovel(id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
+            lista.add(i);
+        }
+        return lista;
+    }
+
+     public void delete(Imovel i) throws SQLException {
+        String query  = """
+        DELETE FROM imovel
+        WHERE  id_imovel = ?
+        """;
+        PreparedStatement st = this.bd.prepareStatement(query);
+        st.setInt(1, i.getId_imovel());
+        st.executeUpdate();
+    }
+
     public ArrayList<Imovel> getAll() throws SQLException {
 		ArrayList<Imovel> lista = new ArrayList<>();
 		String query = "SELECT endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao FROM imovel";
@@ -56,4 +109,4 @@ public class ImovelDAO {
 		return lista;
 	}
 
-}/
+}

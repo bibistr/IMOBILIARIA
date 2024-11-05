@@ -14,8 +14,7 @@ public class ContratoDAO {
         this.bd = BancoDeDados.getBd();
     }
 
-    public void create(Contrato contrato) throws SQLException {
-                                                    //NAO PRECISA DO "NULL"?                                            
+    public void create(Contrato contrato) throws SQLException {                                          
         String query = "INSERT INTO contrato (id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         st.setInt(1, contrato.getId_cliente());
@@ -37,48 +36,52 @@ public class ContratoDAO {
     }
 
     //UPDATE
-    public void update (Contrato con) throws SQLException {
+    public void update (Contrato contrato) throws SQLException {
         String query = """
-        UPDATE FROM contrato
+        UPDATE contrato
         SET data_inicio = ?, data_fim = ?
         WHERE  id_imovel = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(con.getData_inicio());
-        st.setString(con.getData_fim());
-        st.setInt(con.getId_imovel());
+        st.setString(1, contrato.getData_inicio());
+        st.setString(2, contrato.getData_fim());
+        st.setInt(3,contrato.getId_imovel());
         st.executeUpdate();
     }
 
     //CONSULTA
-    ArrayList<Contrato>findByNomeLike(String n) throws SQLException {
-        ArrayList<Contrato> lista = new ArrayList<Contrato>();
+    ArrayList<Contrato>findByNameLike(String d) throws SQLException {
+        ArrayList<Contrato> lista = new ArrayList<>();
         String query = """
-        SELECT FROM contrato
+        SELECT * FROM contrato
         WHERE  data_inicio LIKE ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, "%" + n + "%");
+        st.setString(1, "%" + d + "%");
         ResultSet res = st.executeQuery();
         while(res.next()) {
-            int id = res.getInt("id");
+            int id_contrato = res.getInt("id");
             int id_cliente = res.getInt("id_cliente");
             int id_corretor = res.getInt("id_corretor");
             int id_imovel = res.getInt("id_imovel");
-            String data_inicio = res.getData_inicio("data_inicio");
-            String data_fim = res.getData_fim("data_fim");  
-            Contrato cont = new Contrato(id, id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao);
-            lista.add(cont); 
+            String data_inicio = res.getString("data_inicio");
+            String data_fim = res.getString("data_fim");  
+            String comissao = res.getString("comissao");
+            Contrato contrato = new Contrato(id_contrato, id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao);
+            lista.add(contrato); 
         }
         return lista;
     }
 
     ///DELETE
-    public void delete(Contrato con) throws SQLException {
+    public void delete(Contrato contrato) throws SQLException {
         String query = """
         DELETE FROM contrato
         WHERE id_cliente = ?
         """;
+        PreparedStatement st = this.bd.prepareStatement(query);
+        st.setInt(1, contrato.getId_cliente());
+        st.executeUpdate();
     }
 
     
@@ -102,4 +105,4 @@ public class ContratoDAO {
         return listaContratos;
     }
 
-} /
+} 

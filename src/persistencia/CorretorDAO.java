@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import model.Corretor;
 
 public class CorretorDAO{
@@ -43,18 +42,18 @@ public class CorretorDAO{
         """;
 
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(cor.getNome());
-        st.setString(cor.getEmail());
-        st.setString(cor.getTel());
-        st.setString(cor.getCreci());
+        st.setString(1, cor.getNome());
+        st.setString(2, cor.getEmail());
+        st.setString(3, cor.getTel());
+        st.setString(4, cor.getCreci());
         st.executeUpdate();
     }
 
     //READ
     public ArrayList<Corretor>findByNomeLike(String n) throws SQLException {
-        ArrayList<Corretor> lista = new ArrayList<Corretor>();
+        ArrayList<Corretor> lista = new ArrayList<>();
         String query = """
-        SELECT email, tel, creci 
+        SELECT * FROM corretor
         WHERE nome LIKE ?
         """;
 
@@ -80,24 +79,24 @@ public class CorretorDAO{
         WHERE  creci = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(cor.getCreci());
+        st.setString(1, cor.getCreci());
         st.executeUpdate();
     }
     
 
     public ArrayList<Corretor> getAll() throws SQLException {
-        ArrayList<Corretor> lista_geral = new ArrayList<Corretor>();
+        ArrayList<Corretor> lista_geral = new ArrayList<>();
         String query = "SELECT nome, email, tel, creci FROM corretor";
         PreparedStatement st = this.bd.prepareStatement(query);
         ResultSet res = st.executeQuery();
         while (res.next()) {
             int id_corretor = res.getInt("id_corretor");
-            String nome = res.getString("nome");
-            String email = res.getString("email");
-            String tel = res.getString("tel");
+            String nome_corretor = res.getString("nome");
+            String email_corretor = res.getString("email");
+            String tel_corretor = res.getString("tel");
             String creci = res.getString("creci");
             Corretor cor = new Corretor(id_corretor, nome_corretor, email_corretor, tel_corretor, creci);
-            lista.add(cor);
+            lista_geral.add(cor);
         }
         return lista_geral;
     }
