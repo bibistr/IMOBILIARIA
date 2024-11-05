@@ -61,8 +61,15 @@ public class ImovelDAO {
         SELECT id_ imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano construcao
         WHERE tipo LIKE ?
         """;
+        try {
         PreparedStatement st = this.bd.prepareStatement(query);
         st.setString(1, "%" + t + "%");
+        ResultSet res = st.executeQuery();
+        
+    } catch (Exception e) {
+        // terminar de resolver
+        }
+        
         ResultSet res = st.executeQuery();
         while(res.next()) {
             int id_imovel = res.getInt("id_imovel");
@@ -73,7 +80,7 @@ public class ImovelDAO {
             double valor_venda = res.getDouble("valor_venda");
             double valor_aluguel = res.getDouble("valor_aluguel");
             int ano_construcao = res.getInt("ano_construcao");
-            Imovel i = new Imovel(id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
+            Imovel i = new Imovel(endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
             lista.add(i);
         }
         return lista;
@@ -103,7 +110,7 @@ public class ImovelDAO {
             double valor_venda = res.getDouble("valor_venda");
             double valor_aluguel = res.getDouble("valor_aluguel");
             int ano_construcao = res.getInt("ano_construcao"); // INT !!!
-			Imovel i = new Imovel(id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
+			Imovel i = new Imovel( endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
 			lista.add(i);
 		}
 		return lista;
