@@ -16,46 +16,50 @@ public class Locacao {
         this.data_fim = data_fim;
     }
 
-    public int getId_locacao() {
+    public int getIdLocacao() {
         return this.id_locacao;
     }
-    public void setId_locacao(int id_locacao) {
+    public void setIdLocacao(int id_locacao) {
         this.id_locacao = id_locacao;
     }
 
-    public int getId_cliente() {
+    
+    public int getIdCliente() {
         return this.id_cliente;
     }
-    public void setId_cliente(int id_cliente) {
+    public void setIdCliente(int id_cliente) {
         this.id_cliente = id_cliente;
     }
 
-    public int getId_imovel() {
+
+    public int getIdImovel() {
         return this.id_imovel;
     }
-    public void setId_imovel(int id_imovel) {
+    public void setIdImovel(int id_imovel) {
         this.id_imovel = id_imovel;
     }
 
-    public String getData_inicio() {
+
+    public String getDataInicio() {
         return this.data_inicio;
     }
-    public void setData_inicio(String data_inicio) {
+    public void setDataInicio(String data_inicio) {
         this.data_inicio = data_inicio;
     }
 
-    public String getData_fim() {
+
+    public String getDataFim() {
         return this.data_fim;
     }
-    public void setData_fim(String data_fim) {
+    public void setDataFim(String data_fim) {
         this.data_fim = data_fim;
     }
 
     @Override
     public String toString() {
-        return "" + "id da locação: " + getId_locacao() + ", id do cliente: " + getId_cliente() + ", id do imóvel: "
-        + getId_imovel() + ", data de início da locação: " + getData_inicio() + ", data do fim da locação: "
-        + getData_fim();
+        return "" + "id da locação: " + getIdLocacao() + ", id do cliente: " + getIdCliente() + ", id do imóvel: "
+        + getIdImovel() + ", data de início da locação: " + getDataInicio() + ", data do fim da locação: "
+        + getDataFim();
     }
     
 }//

@@ -14,22 +14,22 @@ public class ImovelDAO {
         this.bd = BancoDeDados.getBd();
     }
 
-    public void create(Imovel i) throws SQLException {
+    public void create(Imovel imovel) throws SQLException {
         String query = "INSERT INTO imovel VALUES (null, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, i.getEndereco());
-        st.setString(2, i.getTipo());
-        st.setString(3, i.getDescricao());
-        st.setDouble(4, i.getArea());
-        st.setDouble(5, i.getValor_venda());
-        st.setDouble(6, i.getValor_aluguel());
-        st.setInt(7, i.getAno_construcao());
+        st.setString(1, imovel.getEndereco());
+        st.setString(2, imovel.getTipo());
+        st.setString(3, imovel.getDescricao());
+        st.setDouble(4, imovel.getArea());
+        st.setDouble(5, imovel.getValor_venda());
+        st.setDouble(6, imovel.getValor_aluguel());
+        st.setInt(7, imovel.getAno_construcao());
         st.executeUpdate();
 
         try (ResultSet generatedKeys = st.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado//
-                i.setId_imovel(idGerado); //
+                imovel.setId_imovel(idGerado); //
             } else {
                 throw new SQLException("Falha ao obter o ID gerado.");
             }
@@ -37,20 +37,20 @@ public class ImovelDAO {
     }
 
     //UPDATE
-    public void update (Imovel i) throws SQLException {
+    public void update (Imovel imovel) throws SQLException {
         String query = """
         UPDATE imovel
         SET  endereco = ?, tipo = ?, descricao = ?, area = ?, valor_venda = ?, valor_aluguel = ?, ano construcao = ?
         WHERE  id_imovel = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, i.getEndereco());
-        st.setString(2, i.getTipo());
-        st.setString(3, i.getDescricao());
-        st.setDouble(4, i.getArea());
-        st.setDouble(5, i.getValor_venda());
-        st.setDouble(6, i.getValor_aluguel());
-        st.setInt(7, i.getAno_construcao());
+        st.setString(1, imovel.getEndereco());
+        st.setString(2, imovel.getTipo());
+        st.setString(3, imovel.getDescricao());
+        st.setDouble(4, imovel.getArea());
+        st.setDouble(5, imovel.getValor_venda());
+        st.setDouble(6, imovel.getValor_aluguel());
+        st.setInt(7, imovel.getAno_construcao());
         st.executeUpdate();
     }
 
@@ -73,19 +73,19 @@ public class ImovelDAO {
             double valor_venda = res.getDouble("valor_venda");
             double valor_aluguel = res.getDouble("valor_aluguel");
             int ano_construcao = res.getInt("ano_construcao");
-            Imovel i = new Imovel(id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
-            lista.add(i);
+            Imovel imovel = new Imovel(id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
+            lista.add(imovel);
         }
         return lista;
     }
 
-     public void delete(Imovel i) throws SQLException {
+     public void delete(Imovel imovel) throws SQLException {
         String query  = """
         DELETE FROM imovel
         WHERE  id_imovel = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setInt(1, i.getId_imovel());
+        st.setInt(1, imovel.getId_imovel());
         st.executeUpdate();
     }
 
@@ -103,8 +103,8 @@ public class ImovelDAO {
             double valor_venda = res.getDouble("valor_venda");
             double valor_aluguel = res.getDouble("valor_aluguel");
             int ano_construcao = res.getInt("ano_construcao"); // INT !!!
-			Imovel i = new Imovel(id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
-			lista.add(i);
+			Imovel imovel = new Imovel(id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
+			lista.add(imovel);
 		}
 		return lista;
 	}

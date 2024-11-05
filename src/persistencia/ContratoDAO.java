@@ -17,18 +17,18 @@ public class ContratoDAO {
     public void create(Contrato contrato) throws SQLException {                                          
         String query = "INSERT INTO contrato (id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-        st.setInt(1, contrato.getId_cliente());
-        st.setInt(2, contrato.getId_corretor());
-        st.setInt(3, contrato.getId_imovel());
-        st.setString(4, contrato.getData_inicio());
-        st.setString(5, contrato.getData_fim());
-        st.setString(6, contrato.getComissao());
+        st.setInt(1, contrato.getIdCliente());
+        st.setInt(2, contrato.getIdCorretor());
+        st.setInt(3, contrato.getIdImovel());
+        st.setString(4, contrato.getDataInicio());
+        st.setString(5, contrato.getDataFim());
+        st.setDouble(6, contrato.getComissao());
         st.executeUpdate(); 
 
         try (ResultSet generatedKeys = st.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 int idGerado = generatedKeys.getInt(1); // Obtem o ID gerado
-                contrato.setId_contrato(idGerado); // 
+                contrato.setIdContrato(idGerado); // 
             } else {
                 throw new SQLException("Falha ao obter o ID gerado.");
             }
@@ -43,9 +43,9 @@ public class ContratoDAO {
         WHERE  id_imovel = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, contrato.getData_inicio());
-        st.setString(2, contrato.getData_fim());
-        st.setInt(3,contrato.getId_imovel());
+        st.setString(1, contrato.getDataInicio());
+        st.setString(2, contrato.getDataFim());
+        st.setInt(3,contrato.getIdImovel());
         st.executeUpdate();
     }
 
@@ -66,7 +66,7 @@ public class ContratoDAO {
             int id_imovel = res.getInt("id_imovel");
             String data_inicio = res.getString("data_inicio");
             String data_fim = res.getString("data_fim");  
-            String comissao = res.getString("comissao");
+            double comissao = res.getDouble("comissao");
             Contrato contrato = new Contrato(id_contrato, id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao);
             lista.add(contrato); 
         }
@@ -80,7 +80,7 @@ public class ContratoDAO {
         WHERE id_cliente = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setInt(1, contrato.getId_cliente());
+        st.setInt(1, contrato.getIdCliente());
         st.executeUpdate();
     }
 
@@ -96,9 +96,10 @@ public class ContratoDAO {
             int id_cliente = res.getInt("id_cliente");
             int id_corretor = res.getInt("id_corretor");
             int id_imovel = res.getInt("id_imovel");
+            //  arrumar isso
             String data_inicio = res.getString("data_inicio");
             String data_fim = res.getString("data_fim");
-            String comissao = res.getString("comissao");
+            double comissao = res.getDouble("comissao");
             Contrato contrato = new Contrato(id_contrato, id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao);
             listaContratos.add(contrato);
         }

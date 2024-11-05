@@ -17,16 +17,16 @@ public class LocacaoDAO {
     public void create(Locacao l) throws SQLException {
         String query = "INSERT INTO locacao (id_cliente, id_imovel, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
         PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-        st.setInt(1, l.getId_cliente());
-        st.setInt(2, l.getId_imovel());
-        st.setString(3, l.getData_inicio());
-        st.setString(4, l.getData_fim());
+        st.setInt(1, l.getIdCliente());
+        st.setInt(2, l.getIdImovel());
+        st.setString(3, l.getDataInicio());
+        st.setString(4, l.getDataFim());
         st.executeUpdate();
 
         try (ResultSet generatedKeys = st.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
-                l.setId_locacao(idGerado);
+                l.setIdLocacao(idGerado);
             } else {
                 throw new SQLException("Falha ao obter o ID gerado.");
             }
@@ -42,8 +42,8 @@ public class LocacaoDAO {
         """;
 
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, l.getData_inicio());
-        st.setString(2, l.getData_fim());
+        st.setString(1, l.getDataInicio());
+        st.setString(2, l.getDataFim());
         st.executeUpdate();
     }
 
@@ -76,7 +76,7 @@ public class LocacaoDAO {
         WHERE  id_locacao = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setInt(1, l.getId_locacao());
+        st.setInt(1, l.getIdLocacao());
         st.executeUpdate();
     }
 

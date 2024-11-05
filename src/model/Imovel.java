@@ -8,6 +8,7 @@ public class Imovel {
     private int ano_construcao;
 
     public Imovel (int id_imovel, String endereco, String tipo, String descricao, double area, double valor_venda, double valor_aluguel, int ano_construcao) {
+        this.id_imovel = id_imovel;
         this.endereco = endereco;
         this.tipo = tipo;
         this.descricao = descricao;
@@ -15,7 +16,6 @@ public class Imovel {
         this.valor_venda = valor_venda;
         this.valor_aluguel = valor_aluguel;
         this.ano_construcao = ano_construcao;
-        this.id_imovel = id_imovel;
     }
 
     public int getId_imovel() {
@@ -24,6 +24,7 @@ public class Imovel {
     public void setId_imovel(int id_imovel) {
         this.id_imovel = id_imovel;
     }
+
 
     public String getEndereco() {
         return this.endereco;
@@ -57,32 +58,33 @@ public class Imovel {
     }
 
 
-    public double getValor_venda() {
+    public double getValorVenda() {
         return this.valor_venda;
     }
-    public void setValor_venda(double valor_venda) {
+    public void setValorVenda(double valor_venda) {
         this.valor_venda = valor_venda;
     }
 
 
-    public double getValor_aluguel() {
+    public double getValorAluguel() {
         return this.valor_aluguel;
     }
-    public void setValor_aluguel(double valor_aluguel) {
+    public void setValorAluguel(double valor_aluguel) {
         this.valor_aluguel = valor_aluguel;
     }
 
 
-    public int getAno_construcao() {
+    public int getAnoConstrucao() {
         return this.ano_construcao;
     }
-    public void setAno_construcao(int ano_construcao) {
+    public void setAnoConstrucao(int ano_construcao) {
         this.ano_construcao = ano_construcao;
     }
 
+
     @Override
     public String toString() {
-return "" + getId_imovel() + ", " + "Endereço: " + getEndereco() + ", " + "Imóvel: " + getTipo() + ", Descrição: " + getDescricao() + ", Ano de construção: " + getAno_construcao() + ", Área: " + getArea() + ", valor do imóvel à venda: " + getValor_venda() + ", valor locação: " + getValor_aluguel();
+return "" + getId_imovel() + ", " + "Endereço: " + getEndereco() + ", " + "Imóvel: " + getTipo() + ", Descrição: " + getDescricao() + ", Ano de construção: " + getAnoConstrucao() + ", Área: " + getArea() + ", valor do imóvel à venda: " + getValorVenda() + ", valor locação: " + getValorAluguel();
     }
 
 }//

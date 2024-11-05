@@ -26,7 +26,7 @@ public class CorretorDAO{
         try (ResultSet generatedKeys = st.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
-                cor.setId_corretor(idGerado); //
+                cor.setIdCorretor(idGerado); //
             } else {
                 throw new SQLException("Falha ao obter o ID gerado.");
             }

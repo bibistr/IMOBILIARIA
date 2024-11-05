@@ -21,14 +21,14 @@ public class ClienteDAO{
         st.setString(6, c.getEndereco());
         st.setString(2, c.getEmail());
         st.setString(3, c.getTel());
-        st.setString(4, c.getData_nasc());
+        st.setString(4, c.getDataNasc());
         st.setString(5, c.getCpf());
         st.executeUpdate();
 
         try (ResultSet generatedKeys = st.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
-                c.setId_cliente(idGerado); //
+                c.setIdCliente(idGerado); //
             } else {
                 throw new SQLException("Falha ao obter o ID gerado.");
             }

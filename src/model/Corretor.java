@@ -18,16 +18,16 @@ package model;
         this.creci = creci;
     }
 
-    public int getId_corretor() {
+    public int getIdCorretor() {
         return this.id_corretor;
     }
-    public void setId_corretor(int id_corretor){
+    public void setIdCorretor(int id_corretor){
         this.id_corretor = id_corretor;
     }
 
     @Override
     public String toString() {
-        return "" + getId_corretor() + ", " + getNome() + ", " + getCreci() + ", E-mail: " + getEmail() + ", Telefone: " + getTel();
+        return "" + getIdCorretor() + ", " + getNome() + ", " + getCreci() + ", E-mail: " + getEmail() + ", Telefone: " + getTel();
     }
 // SEM ALTERAÇÕES//
 
