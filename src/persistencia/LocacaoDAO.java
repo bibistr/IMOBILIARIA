@@ -5,28 +5,34 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Cliente;
+import model.Imovel;
 import model.Locacao;
 
 public class LocacaoDAO {
     private Connection bd;
+    private ClienteDAO clienteDAO;  
+    private ImovelDAO imovelDAO;
 
     public LocacaoDAO() {
         this.bd = BancoDeDados.getBd();
+        this.clienteDAO = new ClienteDAO(); 
+        this.imovelDAO = new ImovelDAO();
     }
 
-    public void create(Locacao l) throws SQLException {
+    public void create(Locacao locacao) throws SQLException {
         String query = "INSERT INTO locacao (id_cliente, id_imovel, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
         PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-        st.setInt(1, l.getIdCliente());
-        st.setInt(2, l.getIdImovel());
-        st.setString(3, l.getDataInicio());
-        st.setString(4, l.getDataFim());
+        st.setInt(1, locacao.getCliente().getIdCliente());
+        st.setInt(2, locacao.getImovel().getIdImovel());
+        st.setString(3, locacao.getDataInicio());
+        st.setString(4, locacao.getDataFim());
         st.executeUpdate();
 
         try (ResultSet generatedKeys = st.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
-                l.setIdLocacao(idGerado);
+                locacao.setIdLocacao(idGerado);
             } else {
                 throw new SQLException("Falha ao obter o ID gerado.");
             }
@@ -34,21 +40,21 @@ public class LocacaoDAO {
     }
 
     //UPDATE
-    public void update (Locacao l) throws SQLException {
+    public void update (Locacao locacao) throws SQLException {
         String query = """
         UPDATE locacao
-        SET data_inicio, data_fim = ?
+        SET data_inicio = ?, data_fim = ?
         WHERE id_locacao = ?;
         """;
 
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, l.getDataInicio());
-        st.setString(2, l.getDataFim());
+        st.setString(1, locacao.getDataInicio());
+        st.setString(2, locacao.getDataFim());
         st.executeUpdate();
     }
 
     //READ
-    public ArrayList<Locacao>findByNomeLike(String d) throws SQLException {
+    public ArrayList<Locacao>findByDataInicioLike(String d) throws SQLException {
         ArrayList<Locacao> lista = new ArrayList<>();
         String query = """
         SELECT * FROM locacao
@@ -64,19 +70,23 @@ public class LocacaoDAO {
             int id_imovel = res.getInt("id_imovel");
             String data_inicio = res.getString("data_inicio");
             String data_fim = res.getString("data_fim");
-            Locacao l = new Locacao(id_locacao, id_cliente, id_imovel, data_inicio, data_fim);
-            lista.add(l);
+
+            Cliente cliente = clienteDAO.findById(id_cliente);
+            Imovel imovel = imovelDAO.findById(id_imovel);
+
+            Locacao locacao = new Locacao(id_locacao, cliente, imovel, data_inicio, data_fim);
+            lista.add(locacao);
         }
         return lista;
     }
 
-     public void delete(Locacao l) throws SQLException {
+     public void delete(Locacao locacao) throws SQLException {
         String query  = """
         DELETE FROM locacao
         WHERE  id_locacao = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setInt(1, l.getIdLocacao());
+        st.setInt(1, locacao.getIdLocacao());
         st.executeUpdate();
     }
 
@@ -91,8 +101,12 @@ public class LocacaoDAO {
             int id_imovel = res.getInt("id_imovel");
             String data_inicio = res.getString("data_inicio");
             String data_fim = res.getString("data_fim");
-            Locacao l = new Locacao(id_locacao, id_cliente, id_imovel, data_inicio, data_fim);
-            listaContratos.add(l);
+
+            Cliente cliente = clienteDAO.findById(id_cliente);
+            Imovel imovel = imovelDAO.findById(id_imovel);
+
+            Locacao locacao = new Locacao(id_locacao, cliente, imovel, data_inicio, data_fim);
+            listaContratos.add(locacao);
         }
         return listaContratos;
     }

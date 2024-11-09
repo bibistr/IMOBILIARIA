@@ -29,7 +29,5 @@ package model;
     public String toString() {
         return "" + getIdCorretor() + ", " + getNome() + ", " + getCreci() + ", E-mail: " + getEmail() + ", Telefone: " + getTel();
     }
-// SEM ALTERAÇÕES//
 
-
-}//
+}

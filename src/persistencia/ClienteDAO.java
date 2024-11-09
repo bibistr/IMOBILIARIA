@@ -14,21 +14,21 @@ public class ClienteDAO{
         this.bd = BancoDeDados.getBd();
     }
 
-    public void create(Cliente c) throws SQLException {
-        String query = "INSERT INTO cliente VALUES(null,?, ?, ?, ?, ?, ? )";
+    public void create(Cliente cliente) throws SQLException {
+        String query = "INSERT INTO cliente (nome, email, tel, data_nasc, cpf, endereco) VALUES(?, ?, ?, ?, ?, ? )";
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, c.getNome());
-        st.setString(6, c.getEndereco());
-        st.setString(2, c.getEmail());
-        st.setString(3, c.getTel());
-        st.setString(4, c.getDataNasc());
-        st.setString(5, c.getCpf());
+        st.setString(1, cliente.getNome());
+        st.setString(6, cliente.getEndereco());
+        st.setString(2, cliente.getEmail());
+        st.setString(3, cliente.getTel());
+        st.setString(4, cliente.getDataNasc());
+        st.setString(5, cliente.getCpf());
         st.executeUpdate();
 
         try (ResultSet generatedKeys = st.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
-                c.setIdCliente(idGerado); //
+                cliente.setIdCliente(idGerado); //
             } else {
                 throw new SQLException("Falha ao obter o ID gerado.");
             }
@@ -37,7 +37,7 @@ public class ClienteDAO{
 
 
   //UPDATE 
-    public void update(Cliente c) throws SQLException {
+    public void update(Cliente cliente) throws SQLException {
         String query = """
         UPDATE cliente
         SET nome  = ?, endereco = ?, tel = ?, email = ?
@@ -45,11 +45,11 @@ public class ClienteDAO{
         """;
     
     PreparedStatement st = this.bd.prepareStatement(query);
-    st.setString(1, c.getNome());
-    st.setString(2, c.getEndereco());
-    st.setString(3, c.getEmail());
-    st.setString(4, c.getTel());
-    st.setString(5, c.getCpf());
+    st.setString(1, cliente.getNome());
+    st.setString(2, cliente.getEndereco());
+    st.setString(3, cliente.getEmail());
+    st.setString(4, cliente.getTel());
+    st.setString(5, cliente.getCpf());
     st.executeUpdate();
     }
 
@@ -72,25 +72,48 @@ public class ClienteDAO{
                 String tel = res.getString("tel");
                 String data_nasc = res.getString("data_nasc");
                 String cpf = res.getString("cpf");
-                Cliente c = new Cliente(id_cliente, nome,endereco,email, tel, data_nasc, cpf);
-                lista.add(c);
+                Cliente cliente = new Cliente(id_cliente, nome,endereco,email, tel, data_nasc, cpf);
+                lista.add(cliente);
                }
                return lista;
     }
 
+    public Cliente findById(int id_cliente) throws SQLException {
+        String query = """
+        SELECT * FROM cliente 
+        WHERE id_cliente = ?"
+        """;
+
+        PreparedStatement st = bd.prepareStatement(query);
+        st.setInt(1, id_cliente);
+        ResultSet res = st.executeQuery();
+        if (res.next()) {
+            return new Cliente(
+                res.getInt("id_cliente"),
+                res.getString("nome"),
+                res.getString("cpf"),
+                res.getString("endereco"),
+                res.getString("telefone"),
+                res.getString("email"),
+                res.getString("data_nascimento")
+            );
+        } else {
+            throw new SQLException("Cliente com ID " + id_cliente + " não encontrado.");
+        }
+    }
+
 
     // DELETE
-    public void delete(Cliente c) throws SQLException {
+    public void delete(Cliente cliente) throws SQLException {
         String query = """
         DELETE FROM cliente
         WHERE cpf = ?"
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, c.getCpf());
+        st.setString(1, cliente.getCpf());
         st.executeUpdate();
     }
 
-    
 
     //LISTA GERAL
     public ArrayList<Cliente> getAll() throws SQLException {
@@ -106,9 +129,9 @@ public class ClienteDAO{
             String data_nasc = res.getString("data_nasc");
             String cpf =  res.getString("cpf");
             String endereco = res.getString("endereco");
-            Cliente c = new Cliente(id_cliente, nome_cliente, email_cliente, tel_cliente, data_nasc, cpf, endereco);
-            lista_geral.add(c);
+            Cliente cliente = new Cliente(id_cliente, nome_cliente, email_cliente, tel_cliente, data_nasc, cpf, endereco);
+            lista_geral.add(cliente);
         }
         return lista_geral;
     }
-}//
+}

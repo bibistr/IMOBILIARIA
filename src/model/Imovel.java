@@ -3,12 +3,16 @@ package model;
 public class Imovel {
 
     private int id_imovel;
+    private Cliente cliente;
+    private Corretor corretor;
     private String endereco, tipo, descricao;
     private double area, valor_venda, valor_aluguel;
     private int ano_construcao;
 
-    public Imovel (int id_imovel, String endereco, String tipo, String descricao, double area, double valor_venda, double valor_aluguel, int ano_construcao) {
+    public Imovel (int id_imovel, Cliente cliente, Corretor corretor, String endereco, String tipo, String descricao, double area, double valor_venda, double valor_aluguel, int ano_construcao) {
         this.id_imovel = id_imovel;
+        this.cliente = cliente;
+        this.corretor = corretor;
         this.endereco = endereco;
         this.tipo = tipo;
         this.descricao = descricao;
@@ -18,11 +22,27 @@ public class Imovel {
         this.ano_construcao = ano_construcao;
     }
 
-    public int getId_imovel() {
+    public int getIdImovel() {
         return this.id_imovel;
     }
-    public void setId_imovel(int id_imovel) {
+    public void setIdImovel(int id_imovel) {
         this.id_imovel = id_imovel;
+    }
+
+
+    public Cliente getCliente() {
+        return this.cliente;
+    }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+
+    public Corretor getCorretor() {
+        return this.corretor;
+    }
+    public void setCorretor(Corretor corretor) {
+        this.corretor = corretor;
     }
 
 
@@ -84,7 +104,7 @@ public class Imovel {
 
     @Override
     public String toString() {
-return "" + getId_imovel() + ", " + "Endereço: " + getEndereco() + ", " + "Imóvel: " + getTipo() + ", Descrição: " + getDescricao() + ", Ano de construção: " + getAnoConstrucao() + ", Área: " + getArea() + ", valor do imóvel à venda: " + getValorVenda() + ", valor locação: " + getValorAluguel();
+return "" + getIdImovel() + ", Cliente: " +  cliente.getNome() + ", Corretor responsável: " + corretor.getNome() + "Endereço: " + getEndereco() + ", " + "Imóvel: " + getTipo() + ", Descrição: " + getDescricao() + ", Ano de construção: " + getAnoConstrucao() + ", Área: " + getArea() + ", valor do imóvel à venda: " + getValorVenda() + ", valor locação: " + getValorAluguel();
     }
 
-}//
+}
