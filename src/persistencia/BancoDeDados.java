@@ -10,7 +10,7 @@ package persistencia;
 
         public static Connection getBd() {
             if(bd == null){
-
+//
                 try{
                     bd = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/bd_imobiliaria",
@@ -26,6 +26,6 @@ package persistencia;
             return bd;//teste
 
         }
-    }                                //SEM ALTERAÕES.//
+    }                                //SEM ALTERAÕES./////
 
 

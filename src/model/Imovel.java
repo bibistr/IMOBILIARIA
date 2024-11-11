@@ -16,7 +16,7 @@ public class Imovel {
         this.endereco = endereco;
         this.tipo = tipo;
         this.descricao = descricao;
-        this.area = area;                 //CONSTRUTOR COM ID
+        this.area = area;                 //CONSTRUTOR COM ID//
         this.valor_venda = valor_venda;
         this.valor_aluguel = valor_aluguel;
         this.ano_construcao = ano_construcao;

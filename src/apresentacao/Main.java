@@ -8,7 +8,7 @@ import persistencia.BancoDeDados;
 import persistencia.ClienteDAO;
 import persistencia.CorretorDAO;
 import persistencia.ContratoDAO;
-import persistencia.ImovelDAO;
+import persistencia.ImovelDAO; ///
 import persistencia.LocacaoDAO;
 import java.util.Scanner;
 import java.sql.SQLException;

@@ -20,7 +20,7 @@ package model;
 
 
 
-    public String getCreci() {
+    public String getCreci() {////
         return this.creci;
     }
     public void setCreci(String creci) {
@@ -35,7 +35,7 @@ package model;
         this.id_corretor = id_corretor;
     }
 
-    
+
     @Override
     public String toString() {
         return "" + getIdCorretor() + ", " + getNome() + ", " + getCreci() + ", E-mail: " + getEmail() + ", Telefone: " + getTel();

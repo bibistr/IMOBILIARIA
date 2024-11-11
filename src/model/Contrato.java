@@ -79,7 +79,7 @@ public class Contrato {
 
     public double getComissao() {
         return this.comissao;
-    }
+    }//
     public void setComissao(double comissao) { // MUDAR PARA DOUBLE
         this.comissao = comissao;
     }

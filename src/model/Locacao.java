@@ -61,11 +61,11 @@ public class Locacao {
     }
     public void setDataFim(String data_fim) {
         this.data_fim = data_fim;
-    }
+    }//teste
 
     @Override
     public String toString() {
-        return "" + "id da locação: " + getIdLocacao() + ", Cliente: " + cliente.getIdCliente() + ", id do imóvel: "
+        return "" + "id da locação: " + getIdLocacao() + ", Cliente: " + cliente.getIdCliente() + ", id do imóvel: "//
         + imovel.getIdImovel() + ", data de início da locação: " + getDataInicio() + ", data do fim da locação: "
         + getDataFim();
     }

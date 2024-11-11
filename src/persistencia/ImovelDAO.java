@@ -75,7 +75,7 @@ public class ImovelDAO {
             int id_imovel = res.getInt("id_imovel");
             int id_cliente = res.getInt("id_cliente");
             int id_corretor = res.getInt("id_corretor");
-            String endereco= res.getString("endereco");
+            String endereco= res.getString("endereco");                     /////
             String tipo = res.getString("tipo");
             String descricao= res.getString("descricao");
             double area = res.getDouble("area");

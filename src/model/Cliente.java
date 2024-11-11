@@ -44,7 +44,7 @@ public class Cliente extends Usuario {
     public String getCpf() {
         return this.cpf;
     }
-    public void setCpf(String cpf) {
+    public void setCpf(String cpf) {//
         this.cpf = cpf;
     }
 

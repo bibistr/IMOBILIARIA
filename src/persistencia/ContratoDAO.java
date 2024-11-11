@@ -119,7 +119,7 @@ public class ContratoDAO {
             Corretor corretor = corretorDAO.findById(id_corretor);
             Imovel imovel = imovelDAO.findById(id_imovel);
 
-            Contrato contrato = new Contrato(id_contrato, cliente, corretor, imovel , data_inicio, data_fim, comissao);
+            Contrato contrato = new Contrato(id_contrato, cliente, corretor, imovel , data_inicio, data_fim, comissao); /////
             listaContratos.add(contrato);
         }
         return listaContratos;

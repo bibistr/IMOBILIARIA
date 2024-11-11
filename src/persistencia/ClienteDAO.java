@@ -67,7 +67,7 @@ public class ClienteDAO{
                while(res.next()) {
                 int id_cliente = res.getInt("id_cliente");
                 String nome = res.getString("nome");
-                String endereco = res.getString("endereco");
+                String endereco = res.getString("endereco");/////
                 String email = res.getString("email");
                 String tel = res.getString("tel");
                 String data_nasc = res.getString("data_nasc");
