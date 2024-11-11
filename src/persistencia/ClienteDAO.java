@@ -72,35 +72,12 @@ public class ClienteDAO{
                 String tel = res.getString("tel");
                 String data_nasc = res.getString("data_nasc");
                 String cpf = res.getString("cpf");
-                Cliente cliente = new Cliente(id_cliente, nome,endereco,email, tel, data_nasc, cpf);
+                Cliente cliente = new Cliente(id_cliente, nome, endereco, email, tel, data_nasc, cpf);
                 lista.add(cliente);
                }
                return lista;
     }
 
-    public Cliente findById(int id_cliente) throws SQLException {
-        String query = """
-        SELECT * FROM cliente 
-        WHERE id_cliente = ?"
-        """;
-
-        PreparedStatement st = bd.prepareStatement(query);
-        st.setInt(1, id_cliente);
-        ResultSet res = st.executeQuery();
-        if (res.next()) {
-            return new Cliente(
-                res.getInt("id_cliente"),
-                res.getString("nome"),
-                res.getString("cpf"),
-                res.getString("endereco"),
-                res.getString("telefone"),
-                res.getString("email"),
-                res.getString("data_nascimento")
-            );
-        } else {
-            throw new SQLException("Cliente com ID " + id_cliente + " não encontrado.");
-        }
-    }
 
 
     // DELETE
@@ -133,5 +110,10 @@ public class ClienteDAO{
             lista_geral.add(cliente);
         }
         return lista_geral;
+    }
+
+    public Cliente findById(int id_cliente) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 }

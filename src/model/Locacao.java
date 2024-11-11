@@ -8,8 +8,16 @@ public class Locacao {
     private String data_inicio;
     private String data_fim;
 
-    public Locacao(int id_locacao, Cliente cliente, Imovel imovel, String data_inicio, String data_fim) {
-        this.id_locacao = id_locacao;
+    public Locacao(int id_locacao, Cliente cliente, Imovel imovel, String data_inicio, String data_fim) {  // COM ID
+        this.id_locacao = id_locacao; 
+        this.cliente = cliente;
+        this.imovel = imovel;
+        this.data_inicio = data_inicio;
+        this.data_fim = data_fim;
+    }
+
+
+    public Locacao(Cliente cliente, Imovel imovel, String data_inicio, String data_fim) {  // SEM ID
         this.cliente = cliente;
         this.imovel = imovel;
         this.data_inicio = data_inicio;

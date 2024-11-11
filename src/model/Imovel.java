@@ -9,18 +9,32 @@ public class Imovel {
     private double area, valor_venda, valor_aluguel;
     private int ano_construcao;
 
-    public Imovel (int id_imovel, Cliente cliente, Corretor corretor, String endereco, String tipo, String descricao, double area, double valor_venda, double valor_aluguel, int ano_construcao) {
+    public Imovel ( int id_imovel, Cliente cliente, Corretor corretor, String endereco, String tipo, String descricao, double area, double valor_venda, double valor_aluguel, int ano_construcao) {
         this.id_imovel = id_imovel;
         this.cliente = cliente;
         this.corretor = corretor;
         this.endereco = endereco;
         this.tipo = tipo;
         this.descricao = descricao;
+        this.area = area;                 //CONSTRUTOR COM ID
+        this.valor_venda = valor_venda;
+        this.valor_aluguel = valor_aluguel;
+        this.ano_construcao = ano_construcao;
+    }
+
+    public Imovel ( Cliente cliente, Corretor corretor, String endereco, String tipo, String descricao, double area, double valor_venda, double valor_aluguel, int ano_construcao) {
+        this.cliente = cliente;
+        this.corretor = corretor;
+        this.endereco = endereco;
+        this.tipo = tipo;
+        this.descricao = descricao;       //CONSTRUTOR SEM ID
         this.area = area;
         this.valor_venda = valor_venda;
         this.valor_aluguel = valor_aluguel;
         this.ano_construcao = ano_construcao;
     }
+
+    
 
     public int getIdImovel() {
         return this.id_imovel;

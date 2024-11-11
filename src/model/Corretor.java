@@ -5,11 +5,20 @@ package model;
     private int id_corretor;
     private String creci;
 
-    public Corretor(int id_corretor, String nome_corretor, String email_corretor, String tel_corretor, String creci){
+
+    public Corretor(int id_corretor, String nome_corretor, String email_corretor, String tel_corretor, String creci){ //CONTRUTOR COM ID
         super(nome_corretor,email_corretor, tel_corretor);
         this.creci = creci;
-        this.id_corretor = id_corretor;
+        this.id_corretor = id_corretor;  
     }
+
+
+    public Corretor(String nome_corretor, String email_corretor, String tel_corretor, String creci){ //CONSTRUTOR SEM ID
+        super(nome_corretor,email_corretor, tel_corretor);
+        this.creci = creci;
+    }
+
+
 
     public String getCreci() {
         return this.creci;
@@ -18,6 +27,7 @@ package model;
         this.creci = creci;
     }
 
+
     public int getIdCorretor() {
         return this.id_corretor;
     }
@@ -25,6 +35,7 @@ package model;
         this.id_corretor = id_corretor;
     }
 
+    
     @Override
     public String toString() {
         return "" + getIdCorretor() + ", " + getNome() + ", " + getCreci() + ", E-mail: " + getEmail() + ", Telefone: " + getTel();

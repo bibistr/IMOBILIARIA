@@ -7,13 +7,23 @@ public class Cliente extends Usuario {
     private String endereco;
     private int id_cliente;
 
-    public Cliente(int id_cliente, String nome_cliente, String email_cliente, String tel_cliente, String data_nasc, String cpf, String endereco) {
+    public Cliente( int id_cliente, String nome_cliente, String email_cliente, String tel_cliente, String data_nasc, String cpf, String endereco) { // CONSTRUTOR COM ID 
         super(nome_cliente, email_cliente, tel_cliente);
         this.data_nasc = data_nasc;
         this.cpf = cpf;
         this.endereco = endereco;
         this.id_cliente = id_cliente;
     }
+
+    public Cliente( String nome_cliente, String email_cliente, String tel_cliente, String data_nasc, String cpf, String endereco) { // CONSTRUTOR SEM ID
+        super(nome_cliente, email_cliente, tel_cliente);
+        this.data_nasc = data_nasc;
+        this.cpf = cpf;
+        this.endereco = endereco;
+    }
+
+
+    
 
     public int getIdCliente() {
         return this.id_cliente;

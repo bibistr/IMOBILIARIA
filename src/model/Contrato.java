@@ -9,7 +9,7 @@ public class Contrato {
     private String data_inicio, data_fim;
     private double comissao;
 
-    public Contrato(int id_contrato, Cliente cliente, Corretor corretor, Imovel imovel, String data_inicio, String data_fim, double comissao) {
+    public Contrato(int id_contrato, Cliente cliente, Corretor corretor, Imovel imovel, String data_inicio, String data_fim, double comissao) { // CONSTRUTOR COM ID
         this.id_contrato = id_contrato;
         this.imovel = imovel;
         this.cliente = cliente;
@@ -18,6 +18,16 @@ public class Contrato {
         this.data_fim = data_fim;
         this.comissao = comissao;
     }
+
+    public Contrato( Cliente cliente, Corretor corretor, Imovel imovel, String data_inicio, String data_fim, double comissao) {  // CONSTRUTOR SEM ID
+        this.imovel = imovel;
+        this.cliente = cliente;
+        this.corretor = corretor;
+        this.data_inicio = data_inicio;
+        this.data_fim = data_fim;
+        this.comissao = comissao;
+    }
+
 
     public int getIdContrato() {
         return this.id_contrato;
