@@ -59,7 +59,7 @@ public class ContratoDAO {
     }
 
     //CONSULTA
-    ArrayList<Contrato>findByDataInicio(String d) throws SQLException {
+    public ArrayList<Contrato>findByDataInicio(String d) throws SQLException {
         ArrayList<Contrato> lista = new ArrayList<>();
         String query = """
         SELECT * FROM contrato
@@ -69,7 +69,7 @@ public class ContratoDAO {
         st.setString(1, "%" + d + "%");
         ResultSet res = st.executeQuery();
         while(res.next()) {
-            int id_contrato = res.getInt("id");
+            int id_contrato = res.getInt("id_contrato");
             int id_cliente = res.getInt("id_cliente");
             int id_corretor = res.getInt("id_corretor");
             int id_imovel = res.getInt("id_imovel");
@@ -92,10 +92,10 @@ public class ContratoDAO {
     public void delete(Contrato contrato) throws SQLException {
         String query = """
         DELETE FROM contrato
-        WHERE id_cliente = ?
+        WHERE id_contrato = ?
         """;
         PreparedStatement st = this.bd.prepareStatement(query);
-        st.setInt(1, contrato.getCliente().getIdCliente());
+        st.setInt(1, contrato.getIdContrato());
         st.executeUpdate();
     }
 
@@ -119,7 +119,7 @@ public class ContratoDAO {
             Corretor corretor = corretorDAO.findById(id_corretor);
             Imovel imovel = imovelDAO.findById(id_imovel);
 
-            Contrato contrato = new Contrato(id_contrato, cliente, corretor, imovel , data_inicio, data_fim, comissao);
+            Contrato contrato = new Contrato(id_contrato, cliente, corretor, imovel , data_inicio, data_fim, comissao); /////
             listaContratos.add(contrato);
         }
         return listaContratos;

@@ -17,7 +17,7 @@ public class LocacaoDAO {
     public LocacaoDAO() {
         this.bd = BancoDeDados.getBd();
         this.clienteDAO = new ClienteDAO(); 
-        this.imovelDAO = new ImovelDAO();
+        this.imovelDAO = new ImovelDAO();              /////
     }
 
     public void create(Locacao locacao) throws SQLException {

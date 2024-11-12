@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.Corretor;
 
@@ -16,7 +17,7 @@ public class CorretorDAO{
 
     public void create (Corretor corretor) throws SQLException {
         String query = "INSERT INTO corretor (nome, email, tel, creci) VALUES(?, ?, ?, ?)";
-        PreparedStatement st = this.bd.prepareStatement(query);
+        PreparedStatement st = this.bd.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         st.setString(1, corretor.getNome());
         st.setString(2, corretor.getEmail());
         st.setString(3, corretor.getTel());
@@ -75,7 +76,7 @@ public class CorretorDAO{
     public Corretor findById(int id_corretor) throws SQLException {
         String query = """
         SELECT * FROM corretor
-        WHERE id_corretor = ?"
+        WHERE id_corretor = ?
         """;
 
         PreparedStatement st = bd.prepareStatement(query);
@@ -124,3 +125,4 @@ public class CorretorDAO{
         return lista_geral;
     }
 }
+
