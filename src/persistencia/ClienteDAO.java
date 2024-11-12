@@ -106,6 +106,31 @@ public class ClienteDAO{
         }
     }
 
+    public Cliente findByCpfCliente(String cpf) throws SQLException {
+        String query = """
+        SELECT * FROM cliente 
+        WHERE cpf = ?"
+        """;
+        try (PreparedStatement st = this.bd.prepareStatement(query)) {
+            st.setString(1, cpf);
+            try (ResultSet res = st.executeQuery()) {
+                if (res.next()) {
+                return new Cliente(
+                    res.getInt("id_cliente"),
+                    res.getString("nome"),
+                    res.getString("cpf"),
+                    res.getString("endereco"),
+                    res.getString("telefone"),
+                    res.getString("email"),
+                    res.getString("data_nascimento")
+                    );
+                } else {
+                    throw new SQLException("Cliente com cpf " + cpf + " não encontrado.");
+                }
+            }
+        }
+    }
+
     // DELETE
     public void delete(Cliente cliente) throws SQLException {
         String query = """

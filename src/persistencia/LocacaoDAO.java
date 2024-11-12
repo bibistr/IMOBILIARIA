@@ -22,19 +22,20 @@ public class LocacaoDAO {
 
     public void create(Locacao locacao) throws SQLException {
         String query = "INSERT INTO locacao (id_cliente, id_imovel, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
-        PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-        st.setInt(1, locacao.getCliente().getIdCliente());
-        st.setInt(2, locacao.getImovel().getIdImovel());
-        st.setString(3, locacao.getDataInicio());
-        st.setString(4, locacao.getDataFim());
-        st.executeUpdate();
-
-        try (ResultSet generatedKeys = st.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
-                locacao.setIdLocacao(idGerado);
-            } else {
-                throw new SQLException("Falha ao obter o ID gerado.");
+        try (PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            st.setInt(1, locacao.getCliente().getIdCliente());
+            st.setInt(2, locacao.getImovel().getIdImovel());
+            st.setString(3, locacao.getDataInicio());
+            st.setString(4, locacao.getDataFim());
+            st.executeUpdate();
+            
+            try (ResultSet generatedKeys = st.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int idGerado = generatedKeys.getInt(1); // Obtém o ID gerado
+                    locacao.setIdLocacao(idGerado);
+                } else {
+                    throw new SQLException("Falha ao obter o ID gerado.");
+                }
             }
         }
     }
@@ -47,10 +48,11 @@ public class LocacaoDAO {
         WHERE id_locacao = ?;
         """;
 
-        PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, locacao.getDataInicio());
-        st.setString(2, locacao.getDataFim());
-        st.executeUpdate();
+        try (PreparedStatement st = bd.prepareStatement(query)) {
+            st.setString(1, locacao.getDataInicio());
+            st.setString(2, locacao.getDataFim());
+            st.executeUpdate();
+        }
     }
 
     //READ
@@ -61,54 +63,59 @@ public class LocacaoDAO {
         WHERE data_inicio LIKE ?
         """;
 
-        PreparedStatement st = this.bd.prepareStatement(query);
-        st.setString(1, "%" + d + "%");
-        ResultSet res = st.executeQuery();
-        while(res.next()) {
-            int id_locacao = res.getInt("id_locacao");
-            int id_cliente = res.getInt("id_cliente");
-            int id_imovel = res.getInt("id_imovel");
-            String data_inicio = res.getString("data_inicio");
-            String data_fim = res.getString("data_fim");
+        try (PreparedStatement st = bd.prepareStatement(query)) {
+            st.setString(1, "%" + d + "%");
+            try (ResultSet res = st.executeQuery()) {
+                while(res.next()) {
+                    int id_locacao = res.getInt("id_locacao");
+                    int id_cliente = res.getInt("id_cliente");
+                    int id_imovel = res.getInt("id_imovel");
+                    String data_inicio = res.getString("data_inicio");
+                    String data_fim = res.getString("data_fim");
 
-            Cliente cliente = clienteDAO.findById(id_cliente);
-            Imovel imovel = imovelDAO.findById(id_imovel);
+                    Cliente cliente = clienteDAO.findById(id_cliente);
+                    Imovel imovel = imovelDAO.findById(id_imovel);
 
-            Locacao locacao = new Locacao(id_locacao, cliente, imovel, data_inicio, data_fim);
-            lista.add(locacao);
+                    Locacao locacao = new Locacao(id_locacao, cliente, imovel, data_inicio, data_fim);
+                    lista.add(locacao);
+                }
+                return lista;
+            }
         }
-        return lista;
     }
 
-     public void delete(Locacao locacao) throws SQLException {
+    public void delete(Locacao locacao) throws SQLException {
         String query  = """
         DELETE FROM locacao
         WHERE  id_locacao = ?
         """;
-        PreparedStatement st = this.bd.prepareStatement(query);
-        st.setInt(1, locacao.getIdLocacao());
-        st.executeUpdate();
+        try (PreparedStatement st = bd.prepareStatement(query)) {
+            st.setInt(1, locacao.getIdLocacao());
+            st.executeUpdate();
+        }
     }
 
     public ArrayList<Locacao> getAll() throws SQLException {
         ArrayList<Locacao> listaContratos = new ArrayList<>();
         String query = "SELECT id_cliente, id_imovel, data_inicio, data_fim, FROM l";
-        PreparedStatement st = this.bd.prepareStatement(query);
-        ResultSet res = st.executeQuery();
-        while (res.next()) {
-            int id_locacao = res.getInt("id_locacao");
-            int id_cliente = res.getInt("id_cliente");
-            int id_imovel = res.getInt("id_imovel");
-            String data_inicio = res.getString("data_inicio");
-            String data_fim = res.getString("data_fim");
+        try (PreparedStatement st = bd.prepareStatement(query)) {
+            try (ResultSet res = st.executeQuery()) {
+                while (res.next()) {
+                    int id_locacao = res.getInt("id_locacao");
+                    int id_cliente = res.getInt("id_cliente");
+                    int id_imovel = res.getInt("id_imovel");
+                    String data_inicio = res.getString("data_inicio");
+                    String data_fim = res.getString("data_fim");
 
-            Cliente cliente = clienteDAO.findById(id_cliente);
-            Imovel imovel = imovelDAO.findById(id_imovel);
+                    Cliente cliente = clienteDAO.findById(id_cliente);
+                    Imovel imovel = imovelDAO.findById(id_imovel);
 
-            Locacao locacao = new Locacao(id_locacao, cliente, imovel, data_inicio, data_fim);
-            listaContratos.add(locacao);
+                    Locacao locacao = new Locacao(id_locacao, cliente, imovel, data_inicio, data_fim);
+                    listaContratos.add(locacao);
+                }
+                return listaContratos;
+            }
         }
-        return listaContratos;
     }
 
 }

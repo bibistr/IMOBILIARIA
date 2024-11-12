@@ -147,27 +147,29 @@ public class ImovelDAO {
     public ArrayList<Imovel> getAll() throws SQLException {
 		ArrayList<Imovel> lista = new ArrayList<>();
 		String query = "SELECT id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao FROM imovel";
-		PreparedStatement st = this.bd.prepareStatement(query);
-		ResultSet res = st.executeQuery();
-		while (res.next()) {
-            int id_imovel = res.getInt("id_imovel");
-            int id_cliente = res.getInt("id_cliente");
-            int id_corretor = res.getInt("id_corretor");
-			String endereco = res.getString("endereco");
-			String tipo = res.getString("tipo");
-			String descricao = res.getString("descricao");
-            double area = res.getDouble("area");
-            double valor_venda = res.getDouble("valor_venda");
-            double valor_aluguel = res.getDouble("valor_aluguel");
-            int ano_construcao = res.getInt("ano_construcao"); 
-
-            Cliente cliente = clienteDAO.findById(id_cliente);
-            Corretor corretor = corretorDAO.findById(id_corretor);
-
-			Imovel imovel = new Imovel(id_imovel, cliente, corretor, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
-			lista.add(imovel);
-		}
-		return lista;
-	}
-
+        try (PreparedStatement st = this.bd.prepareStatement(query)) {
+            try (ResultSet res = st.executeQuery()) {
+                while (res.next()) {
+                    int id_imovel = res.getInt("id_imovel");
+                    int id_cliente = res.getInt("id_cliente");
+                    int id_corretor = res.getInt("id_corretor");
+                    String endereco = res.getString("endereco");
+                    String tipo = res.getString("tipo");
+                    String descricao = res.getString("descricao");
+                    double area = res.getDouble("area");
+                    double valor_venda = res.getDouble("valor_venda");
+                    double valor_aluguel = res.getDouble("valor_aluguel");
+                    int ano_construcao = res.getInt("ano_construcao"); 
+                    
+                    Cliente cliente = clienteDAO.findById(id_cliente);
+                    Corretor corretor = corretorDAO.findById(id_corretor);
+                    
+                    Imovel imovel = new Imovel(id_imovel, cliente, corretor, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
+                    
+                    lista.add(imovel);
+                }
+                return lista;
+            }
+        }
+    }
 }
