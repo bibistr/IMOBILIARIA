@@ -172,24 +172,79 @@ public class Main {
 
         // opção 4 de contrato
         } else if (res == 4) {
+            Cliente cliente = null;
+
             System.out.println("O cliente que deseja fazer o contrato, ja possui cadastro? Digite 'sim' ou 'não'");
             String r = tec.nextLine();
             if (r.equals("sim")) {
-                System.out.println("Digite o nome do cliente cadastrado:");
-                String nome = tec.nextLine();
-                c.findByNomeLike(nome);
+                System.out.println("Digite o CPF do cliente cadastrado:");
+                String cpf = tec.nextLine();
+                cliente = c.findByCpfCliente(cpf);
+
+                if (cliente != null) {
+                    System.out.println("Cliente encontrado: " + cliente.getNome());
+                    
+                } else {
+                    System.out.println("Cliente não encontrado. Caso deseje cadastrá-lo, encerre a seção e dadastre o Cliente. ");
+                }
+            }
+
+                System.out.println("O imovel que fará parte do contrato ja esta cadastrado? Digite 'sim' ou 'não'" );
+                Imovel imovel = null;
+
+                String resposta = tec.nextLine();
+                if (resposta.equals("sim")) {
+                
+                    System.out.println("Digite o ID do imóvel cadastrado:");
+                    int id = tec.nextInt();
+                    i.findById(id);
+                    if(imovel != null) {
+                    System.out.println("Imóvel encontrado: "+imovel.getDescricao()); //nao sei o que é o aviso
+            
+                    }else {
+                        System.out.println("Imóvel não encontrado. Deseja cadastrá-lo? Para cadastrar o imóvel, encerre esta seção e cadastre o imóvel");                    
+                    }
+                }
+                    System.out.println("Insira a data de início do contrato:");
+                    String dataInicio = tec.nextLine();
+                    System.out.println("Digite o prazo final do contrato: ");
+                    String dataFinal = tec.nextLine();
+                    System.out.println("Informe a Comissão do Contrato:");
+                    double comissao = tec.nextDouble();
+
+                    Contrato contrato = new Contrato(cliente, corretor2, imovel, dataInicio, dataFinal, comissao);
+                    cont.create(contrato);
+                
+            
+            
+        } else if(res==5) {
+            System.out.println(i.getAll());
+            System.out.println("\n Clique na opção que deseja realizar:");
+            System.out.println("1.Editar cadastro");
+            System.out.println("2.Deletar cadastro");
+            int resposta = tec.nextInt();
+
+            if (resposta==1) {
+                System.out.println("Digite o ID do imóvel");
+                int id = tec.nextInt();
+                i.findById(id);
+                if (id=!) {
+                    System.out.println("imovel encontrado:"imovel.getDescricao());
+                    
+                } else {
+                    
+                }
+                System.out.println(i.update(imovel));
 
                 
-
-                Contrato contrato = new Contrato()
             } else {
                 
             }
-            
-            
-            
+
         }
 
     } while (res!=8);
+}
+}
        
 
