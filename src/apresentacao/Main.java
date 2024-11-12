@@ -136,7 +136,7 @@ public class Main {
             // fim da opção 1 de cadastrar imovel
 
 
-        // opção 2 de cadastrar cliente
+        // opção 2 de cadastrar cliente//
         } else if (res==2) {
 
             System.out.println("Digite o nome do cliente:");
