@@ -21,15 +21,17 @@ public class ImovelDAO {
     }
 
     public void create(Imovel imovel) throws SQLException {
-        String query = "INSERT INTO imovel VALUES (null, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO imovel (id_cliente, id_corretor, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
-            st.setString(1, imovel.getEndereco());
-            st.setString(2, imovel.getTipo());
-            st.setString(3, imovel.getDescricao());
-            st.setDouble(4, imovel.getArea());
-            st.setDouble(5, imovel.getValorVenda());
-            st.setDouble(6, imovel.getValorAluguel());
-            st.setInt(7, imovel.getAnoConstrucao());
+            st.setInt(1, imovel.getCliente().getIdCliente());
+            st.setInt(2, imovel.getCorretor().getIdCorretor());
+            st.setString(3, imovel.getEndereco());
+            st.setString(4, imovel.getTipo());
+            st.setString(5, imovel.getDescricao());
+            st.setDouble(6, imovel.getArea());
+            st.setDouble(7, imovel.getValorVenda());
+            st.setDouble(8, imovel.getValorAluguel());
+            st.setInt(9, imovel.getAnoConstrucao());
             st.executeUpdate();
             try (ResultSet generatedKeys = st.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -58,6 +60,7 @@ public class ImovelDAO {
         st.setDouble(5, imovel.getValorVenda());
         st.setDouble(6, imovel.getValorAluguel());
         st.setInt(7, imovel.getAnoConstrucao());
+        st.setInt(8, imovel.getIdImovel());
         st.executeUpdate();
         }
     }
@@ -94,9 +97,10 @@ public class ImovelDAO {
                 }
             } 
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar imóveis: " + e.getMessage());
+            System.err.println("Erro ao buscar imóveis: " + e.getMessage()); //025.321.654-85   //
+            //
             throw e;
-        }
+        }//         
         return lista;
     }
 
@@ -104,15 +108,14 @@ public class ImovelDAO {
     public Imovel findById(int idImovel) throws SQLException {
         String query = """
         SELECT * FROM Imovel
-        WHERE id_imovel = ?"
+        WHERE id_imovel = ?
         """;
         try (PreparedStatement st = bd.prepareStatement(query)) {
             st.setInt(1, idImovel);
             try (ResultSet res = st.executeQuery()) {
                 if (res.next()) {
                     Cliente cliente = new ClienteDAO().findById(res.getInt("id_cliente")); 
-                    Corretor corretor = new CorretorDAO().findById(res.getInt("id_corretor")); 
-                    
+                    Corretor corretor = new CorretorDAO().findById(res.getInt("id_corretor"));       
                     return new Imovel(
                         res.getInt("id_imovel"),
                         cliente,
@@ -146,7 +149,7 @@ public class ImovelDAO {
 
     public ArrayList<Imovel> getAll() throws SQLException {
 		ArrayList<Imovel> lista = new ArrayList<>();
-		String query = "SELECT id_imovel, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao FROM imovel";
+		String query = "SELECT id_imovel, id_cliente, id_corretor, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao FROM imovel";
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
             try (ResultSet res = st.executeQuery()) {
                 while (res.next()) {

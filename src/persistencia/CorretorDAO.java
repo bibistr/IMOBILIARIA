@@ -39,7 +39,7 @@ public class CorretorDAO{
         String query = """
         UPDATE corretor
         SET nome_corretor = ?, email = ?, tel = ?
-        WHERE creci = ?;
+        WHERE creci = ?
         """;
 
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
@@ -158,4 +158,5 @@ public class CorretorDAO{
     }
 
 }
+
 

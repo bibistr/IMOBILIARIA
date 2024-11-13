@@ -117,7 +117,9 @@ public class Imovel {
 
     @Override
     public String toString() {
-return "id do imóvel: " + getIdImovel() + ", Cliente: " +  cliente.getNome() + ", Corretor responsável: " + corretor.getNome() + "Endereço: " + getEndereco() + ", " + "Imóvel: " + getTipo() + ", Descrição: " + getDescricao() + ", Ano de construção: " + getAnoConstrucao() + ", Área: " + getArea() + ", valor do imóvel à venda: " + getValorVenda() + ", valor locação: " + getValorAluguel();
+    return "Imóvel ID: " + getIdImovel() + "\n" + "Cliente: " + cliente.getNome() + "\n" + "Corretor responsável: " + corretor.getNome() + "\n" +"Endereço: "
+    + getEndereco() + "\n" + "Tipo de Imóvel: " + getTipo() + "\n" + "Descrição: " + getDescricao() + "\n" + "Ano de construção: " + getAnoConstrucao() + "\n" 
+    + "Área: " + getArea() + " m²\n" + "Valor de venda: R$ " + getValorVenda() + "\n" + "Valor de locação: R$ " + getValorAluguel() + "\n" + "----------------------------------------";
     }
 
 }

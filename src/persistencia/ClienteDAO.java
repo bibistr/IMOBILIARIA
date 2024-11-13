@@ -41,16 +41,17 @@ public class ClienteDAO{
     public void update(Cliente cliente) throws SQLException {
         String query = """
         UPDATE cliente
-        SET nome_cliente  = ?, endereco = ?, tel = ?, email = ?
+        SET nome_cliente = ?, data_nasc = ?, email = ?, tel = ?, endereco = ?
         WHERE cpf = ?
         """;
         
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
             st.setString(1, cliente.getNome());
-            st.setString(2, cliente.getEndereco());
+            st.setString(2, cliente.getDataNasc());
             st.setString(3, cliente.getEmail());
             st.setString(4, cliente.getTel());
-            st.setString(5, cliente.getCpf());
+            st.setString(5, cliente.getEndereco());
+            st.setString(6, cliente.getCpf());
             st.executeUpdate();
         }
     }
@@ -67,13 +68,13 @@ public class ClienteDAO{
             try (ResultSet res = st.executeQuery()) {
                 while(res.next()) {
                     int id_cliente = res.getInt("id_cliente");
-                    String nome = res.getString("nome_cliente");
+                    String nome_cliente = res.getString("nome_cliente");
                     String email = res.getString("email");
                     String tel = res.getString("tel");
                     String data_nasc = res.getString("data_nasc");
                     String cpf = res.getString("cpf");
                     String endereco = res.getString("endereco");
-                    Cliente cliente = new Cliente(id_cliente, nome, email, tel, data_nasc, cpf, endereco);
+                    Cliente cliente = new Cliente(id_cliente, nome_cliente, email, tel, data_nasc, cpf, endereco);
                     lista.add(cliente);
                 }
                 return lista;
@@ -95,9 +96,9 @@ public class ClienteDAO{
                     res.getString("nome_cliente"),
                     res.getString("cpf"),
                     res.getString("endereco"),
-                    res.getString("telefone"),
+                    res.getString("tel"),
                     res.getString("email"),
-                    res.getString("data_nascimento")
+                    res.getString("data_nasc")
                     );
                 } else {
                     throw new SQLException("Cliente com ID " + id_cliente + " não encontrado.");
@@ -109,7 +110,7 @@ public class ClienteDAO{
     public Cliente findByCpfCliente(String cpf) throws SQLException {
         String query = """
         SELECT * FROM cliente 
-        WHERE cpf = ?"
+        WHERE cpf = ?
         """;
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
             st.setString(1, cpf);
@@ -120,9 +121,9 @@ public class ClienteDAO{
                     res.getString("nome_cliente"),
                     res.getString("cpf"),
                     res.getString("endereco"),
-                    res.getString("telefone"),
+                    res.getString("tel"),
                     res.getString("email"),
-                    res.getString("data_nascimento")
+                    res.getString("data_nasc")
                     );
                 } else {
                     throw new SQLException("Cliente com cpf " + cpf + " não encontrado.");
@@ -135,10 +136,10 @@ public class ClienteDAO{
     public void delete(Cliente cliente) throws SQLException {
         String query = """
         DELETE FROM cliente
-        WHERE cpf = ?
+        WHERE id_cliente = ?
         """;
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
-            st.setString(1, cliente.getCpf());
+            st.setInt(1, cliente.getIdCliente());
             st.executeUpdate();
         }
     }
@@ -147,7 +148,7 @@ public class ClienteDAO{
     //LISTA GERAL
     public ArrayList<Cliente> getAll() throws SQLException {
         ArrayList<Cliente> lista_geral = new ArrayList<>();
-        String query = "SELECT id_cliente, nome, email, tel, data_nasc, cpf, endereco FROM cliente";
+        String query = "SELECT id_cliente, nome_cliente, email, tel, data_nasc, cpf, endereco FROM cliente";
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
             try (ResultSet res = st.executeQuery()) {
                 while(res.next()) {
@@ -167,4 +168,6 @@ public class ClienteDAO{
     }
 
 }
+
+
 

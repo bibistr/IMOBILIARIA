@@ -9,7 +9,7 @@ public class Contrato {
     private String data_inicio, data_fim;
     private double comissao;
 
-    public Contrato(int id_contrato, Cliente cliente, Corretor corretor, Imovel imovel, String data_inicio, String data_fim, double comissao) { // CONSTRUTOR COM ID
+    public Contrato(int id_contrato, Cliente cliente, Imovel imovel, Corretor corretor, String data_inicio, String data_fim, double comissao) { // CONSTRUTOR COM ID
         this.id_contrato = id_contrato;
         this.imovel = imovel;
         this.cliente = cliente;
@@ -19,7 +19,7 @@ public class Contrato {
         this.comissao = comissao;
     }
 
-    public Contrato( Cliente cliente, Corretor corretor, Imovel imovel, String data_inicio, String data_fim, double comissao) {  // CONSTRUTOR SEM ID
+    public Contrato( Cliente cliente, Imovel imovel, Corretor corretor, String data_inicio, String data_fim, double comissao) {  // CONSTRUTOR SEM ID
         this.imovel = imovel;
         this.cliente = cliente;
         this.corretor = corretor;
@@ -92,7 +92,10 @@ public class Contrato {
 
     @Override
     public String toString() {
-        return "" + "id do contrato: " + getIdContrato() + ", id Cliente: " + cliente.getIdCliente() + ", id Corretor: " + corretor.getIdCorretor() + ", id do imóvel: " + imovel.getIdImovel() + ", data de início do contrato: " + getDataInicio() + ", data do fim do contrato: " + getDataFim() + "porcentagem a pagar: " + taxarCompra();
+        return "ID do Contrato: " + getIdContrato() + "\n" + "ID do Cliente: " + getCliente().getIdCliente() + "\n" + "ID do Corretor: " + getCorretor().getIdCorretor() + "\n" 
+        + "ID do Imóvel: " + getImovel().getIdImovel() + "\n" + "Data de Início do Contrato: " + getDataInicio() + "\n" + "Data de Fim do Contrato: " + getDataFim() + "\n" +
+         "Porcentagem a Pagar: R$" + taxarCompra() + "\n----------------------------------------";
     }
+
 }
 

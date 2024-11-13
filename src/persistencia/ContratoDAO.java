@@ -24,11 +24,11 @@ public class ContratoDAO {
     }
 
     public void create(Contrato contrato) throws SQLException {                                          
-        String query = "INSERT INTO contrato (id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO contrato (id_cliente, id_imovel, id_corretor, data_inicio, data_fim, comissao) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             st.setInt(1, contrato.getCliente().getIdCliente());
-            st.setInt(2, contrato.getCorretor().getIdCorretor());
-            st.setInt(3, contrato.getImovel().getIdImovel());
+            st.setInt(2, contrato.getImovel().getIdImovel());
+            st.setInt(3, contrato.getCorretor().getIdCorretor());
             st.setString(4, contrato.getDataInicio());
             st.setString(5, contrato.getDataFim());
             st.setDouble(6, contrato.getComissao());
@@ -73,17 +73,17 @@ public class ContratoDAO {
                 while(res.next()) {
                     int id_contrato = res.getInt("id_contrato");
                     int id_cliente = res.getInt("id_cliente");
-                    int id_corretor = res.getInt("id_corretor");
                     int id_imovel = res.getInt("id_imovel");
+                    int id_corretor = res.getInt("id_corretor");
                     String data_inicio = res.getString("data_inicio");
                     String data_fim = res.getString("data_fim");  
                     double comissao = res.getDouble("comissao");
 
                     Cliente cliente = clienteDAO.findById(id_cliente);
-                    Corretor corretor = corretorDAO.findById(id_corretor);
                     Imovel imovel = imovelDAO.findById(id_imovel);
+                    Corretor corretor = corretorDAO.findById(id_corretor);
 
-                    Contrato contrato = new Contrato(id_contrato, cliente, corretor, imovel, data_inicio, data_fim, comissao);
+                    Contrato contrato = new Contrato(id_contrato, cliente, imovel, corretor, data_inicio, data_fim, comissao);
                     lista.add(contrato); 
                 }
                 return lista;
@@ -91,6 +91,33 @@ public class ContratoDAO {
         }
     }
 
+    public Contrato findById(int id_contrato) throws SQLException {
+        String query = """
+        SELECT * FROM contrato
+        WHERE id_contrato = ?
+        """;
+        try (PreparedStatement st = this.bd.prepareStatement(query)) {
+            st.setInt(1, id_contrato);
+            try (ResultSet res = st.executeQuery()) {
+                if (res.next()) {
+                    Cliente cliente = new ClienteDAO().findById(res.getInt("id_cliente")); 
+                    Imovel imovel = new ImovelDAO().findById(res.getInt("id_imovel"));
+                    Corretor corretor = new CorretorDAO().findById(res.getInt("id_corretor"));
+                    return new Contrato(
+                    res.getInt("id_contrato"),
+                    cliente,
+                    imovel,
+                    corretor,
+                    res.getString("data_inicio"),
+                    res.getString("data_fim"),
+                    res.getDouble("comissao")
+                    );
+                } else {
+                    throw new SQLException("Contrato com ID " + id_contrato + " não encontrado.");
+                }
+            }
+        }
+    }
 
     ///DELETE
     public void delete(Contrato contrato) throws SQLException {
@@ -107,15 +134,14 @@ public class ContratoDAO {
 
     public ArrayList<Contrato> getAll() throws SQLException {
         ArrayList<Contrato> listaContratos = new ArrayList<>();
-        String query = "SELECT id_contrato, id_cliente, id_corretor, id_imovel, data_inicio, data_fim, comissao FROM contrato";
+        String query = "SELECT id_contrato, id_cliente, id_imovel, id_corretor, data_inicio, data_fim, comissao FROM contrato";
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
             try (ResultSet res = st.executeQuery()) {
                 while (res.next()) {
                     int id_contrato = res.getInt("id_contrato");
                     int id_cliente = res.getInt("id_cliente");
-                    int id_corretor = res.getInt("id_corretor");
                     int id_imovel = res.getInt("id_imovel");
-                    //  arrumar isso
+                    int id_corretor = res.getInt("id_corretor");
                     String data_inicio = res.getString("data_inicio");
                     String data_fim = res.getString("data_fim");
                     double comissao = res.getDouble("comissao");
@@ -124,7 +150,7 @@ public class ContratoDAO {
                     Corretor corretor = corretorDAO.findById(id_corretor);
                     Imovel imovel = imovelDAO.findById(id_imovel);
 
-                    Contrato contrato = new Contrato(id_contrato, cliente, corretor, imovel , data_inicio, data_fim, comissao); /////
+                    Contrato contrato = new Contrato(id_contrato, cliente, imovel, corretor, data_inicio, data_fim, comissao); 
                     listaContratos.add(contrato);
                 }
                 return listaContratos;

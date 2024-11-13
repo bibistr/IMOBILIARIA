@@ -45,7 +45,7 @@ public class LocacaoDAO {
         String query = """
         UPDATE locacao
         SET data_inicio = ?, data_fim = ?
-        WHERE id_locacao = ?;
+        WHERE id_locacao = ?
         """;
 
         try (PreparedStatement st = bd.prepareStatement(query)) {
@@ -119,3 +119,4 @@ public class LocacaoDAO {
     }
 
 }
+
