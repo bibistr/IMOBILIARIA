@@ -93,7 +93,7 @@ public class ImovelDAO {
                     lista.add(imovel);
                 }
             } 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println("Erro ao buscar imóveis: " + e.getMessage());
             throw e;
         }
