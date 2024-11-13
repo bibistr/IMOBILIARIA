@@ -66,7 +66,7 @@ public class ImovelDAO {
     public ArrayList<Imovel>findByTipoLike(String t ) throws SQLException {
         ArrayList<Imovel> lista = new ArrayList<>();
         String query = """
-        SELECT id_imovel, id_cliente, id_corretor, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano construcao
+        SELECT id_imovel, id_cliente, id_corretor, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao
         FROM imovel
         WHERE tipo LIKE ?
         """;

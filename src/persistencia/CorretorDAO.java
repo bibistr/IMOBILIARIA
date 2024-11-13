@@ -38,7 +38,7 @@ public class CorretorDAO{
     public void update (Corretor corretor) throws SQLException {
         String query = """
         UPDATE corretor
-        SET nome = ?, email = ?, tel = ?
+        SET nome_corretor = ?, email = ?, tel = ?
         WHERE creci = ?;
         """;
 
@@ -140,7 +140,7 @@ public class CorretorDAO{
 
     public ArrayList<Corretor> getAll() throws SQLException {
         ArrayList<Corretor> lista_geral = new ArrayList<>();
-        String query = "SELECT id_corretor, nome, email, tel, creci FROM corretor";
+        String query = "SELECT id_corretor, nome_corretor, email, tel, creci FROM corretor";
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
             try (ResultSet res = st.executeQuery()) {
                 while (res.next()) {

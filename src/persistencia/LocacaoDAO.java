@@ -17,7 +17,7 @@ public class LocacaoDAO {
     public LocacaoDAO() {
         this.bd = BancoDeDados.getBd();
         this.clienteDAO = new ClienteDAO(); 
-        this.imovelDAO = new ImovelDAO();              /////
+        this.imovelDAO = new ImovelDAO();            
     }
 
     public void create(Locacao locacao) throws SQLException {
@@ -97,7 +97,7 @@ public class LocacaoDAO {
 
     public ArrayList<Locacao> getAll() throws SQLException {
         ArrayList<Locacao> listaContratos = new ArrayList<>();
-        String query = "SELECT id_cliente, id_imovel, data_inicio, data_fim, FROM l";
+        String query = "SELECT id_cliente, id_imovel, data_inicio, data_fim, FROM locacao";
         try (PreparedStatement st = bd.prepareStatement(query)) {
             try (ResultSet res = st.executeQuery()) {
                 while (res.next()) {

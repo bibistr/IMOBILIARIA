@@ -15,7 +15,7 @@ public class ClienteDAO{
     }
 
     public void create(Cliente cliente) throws SQLException {
-        String query = "INSERT INTO cliente (nome, email, tel, data_nasc, cpf, endereco) VALUES(?, ?, ?, ?, ?, ? )";
+        String query = "INSERT INTO cliente (nome_cliente, email, tel, data_nasc, cpf, endereco) VALUES(?, ?, ?, ?, ?, ? )";
         try (PreparedStatement st = this.bd.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             st.setString(1, cliente.getNome());
             st.setString(6, cliente.getEndereco());
@@ -41,7 +41,7 @@ public class ClienteDAO{
     public void update(Cliente cliente) throws SQLException {
         String query = """
         UPDATE cliente
-        SET nome  = ?, endereco = ?, tel = ?, email = ?
+        SET nome_cliente  = ?, endereco = ?, tel = ?, email = ?
         WHERE cpf = ?
         """;
         
@@ -60,14 +60,14 @@ public class ClienteDAO{
         ArrayList<Cliente> lista = new ArrayList<>();
         String query = """
         SELECT * FROM cliente
-        WHERE nome LIKE ?
+        WHERE nome_cliente LIKE ?
         """;
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
             st.setString(1, "%" + n + "%");
             try (ResultSet res = st.executeQuery()) {
                 while(res.next()) {
                     int id_cliente = res.getInt("id_cliente");
-                    String nome = res.getString("nome");
+                    String nome = res.getString("nome_cliente");
                     String email = res.getString("email");
                     String tel = res.getString("tel");
                     String data_nasc = res.getString("data_nasc");
@@ -84,7 +84,7 @@ public class ClienteDAO{
     public Cliente findById(int id_cliente) throws SQLException {
         String query = """
         SELECT * FROM cliente 
-        WHERE id_cliente = ?"
+        WHERE id_cliente = ?
         """;
         try (PreparedStatement st = this.bd.prepareStatement(query)) {
             st.setInt(1, id_cliente);
@@ -92,7 +92,7 @@ public class ClienteDAO{
                 if (res.next()) {
                 return new Cliente(
                     res.getInt("id_cliente"),
-                    res.getString("nome"),
+                    res.getString("nome_cliente"),
                     res.getString("cpf"),
                     res.getString("endereco"),
                     res.getString("telefone"),
@@ -117,7 +117,7 @@ public class ClienteDAO{
                 if (res.next()) {
                 return new Cliente(
                     res.getInt("id_cliente"),
-                    res.getString("nome"),
+                    res.getString("nome_cliente"),
                     res.getString("cpf"),
                     res.getString("endereco"),
                     res.getString("telefone"),
@@ -152,7 +152,7 @@ public class ClienteDAO{
             try (ResultSet res = st.executeQuery()) {
                 while(res.next()) {
                     int id_cliente = res.getInt("id_cliente");
-                    String nome_cliente = res.getString("nome");
+                    String nome_cliente = res.getString("nome_cliente");
                     String email_cliente = res.getString("email");
                     String tel_cliente = res.getString("tel");
                     String data_nasc = res.getString("data_nasc");

@@ -42,67 +42,26 @@ public class Main {
         LocacaoDAO loc = new LocacaoDAO();
 
         // Cadastro dos corretores fixos
-        Corretor corretor1 = new Corretor("Bianca Tremea", "tremeabianca@gmailcom", "(51) 99584-8432", "Creci RS 123456-F");
+        Corretor corretor1 = new Corretor("Bianca Tremea", "tremeabianca@gmailcom", "51 99584-8432", "RS 123456-F");
         cor.create(corretor1);
-        Corretor corretor2 = new Corretor("Luiza Demoliner", "emailamiga@exemplo.com", "(51) 98991-9186", "Creci RS 654321-F");
+        Corretor corretor2 = new Corretor("Luiza Demoliner", "emailamiga@exemplo.com", "51 98991-9186", "RS 654321-F");
         cor.create(corretor2);
 
         // opcao 1 de cadastrar imovel
         if (res == 1) {
             Cliente cliente = null;
-            System.out.println("O cliente já possui cadastro? Digite 'sim' ou 'não'");
+
+            System.out.println("O cliente que deseja fazer o contrato, ja possui cadastro? Digite 'sim' ou 'não'");
             String r = tec.nextLine();
-        
             if (r.equalsIgnoreCase("sim")) {
-                System.out.println("Informe o CPF do cliente:");
+                System.out.println("Digite o CPF do cliente cadastrado:");
                 String cpf = tec.nextLine();
                 cliente = c.findByCpfCliente(cpf);
-
                 if (cliente != null) {
-                    System.out.println("Cliente encontrado: " + cliente.getNome());
-                    
+                    System.out.println("Cliente encontrado: " + cliente.getNome());        
                 } else {
-                    System.out.println("Cliente não encontrado. Deseja cadastrá-lo? Digite 'sim' ou 'não')");
-                    r = tec.nextLine(); 
-
-                    if (r.equalsIgnoreCase("sim")) {
-                        System.out.println("Digite o nome do cliente:");
-                        String nome_cliente = tec.nextLine();
-                        System.out.println("Digite o email do cliente:");
-                        String email_cliente = tec.nextLine();
-                        System.out.println("Digite o telefone do cliente:");
-                        String tel_cliente = tec.nextLine();
-                        System.out.println("Digite a data de nascimento do cliente:");
-                        String data_nasc = tec.nextLine();
-                        System.out.println("Digite o CPF do cliente:");
-                        cpf = tec.nextLine();
-                        System.out.println("Digite o endereço do cliente:");
-                        String endereco = tec.nextLine();
-        
-                        cliente = new Cliente(nome_cliente, email_cliente, tel_cliente, endereco, data_nasc, cpf);
-                        c.create(cliente);
-                        System.out.println("Cliente cadastrado com sucesso.");
-                    }
+                    System.out.println("Cliente não encontrado. Caso deseje cadastrá-lo, encerre a seção e cadastre o Cliente. ");
                 }
-                    
-            } else if (r.equalsIgnoreCase("não")) {
-                System.out.println("Digite o nome do cliente:");
-                String nome_cliente = tec.nextLine();
-                System.out.println("Digite o email do cliente:");
-                String email_cliente = tec.nextLine();
-                System.out.println("Digite o telefone do cliente:");
-                String tel_cliente = tec.nextLine();
-                System.out.println("Digite a data de nascimento do cliente:");
-                String data_nasc = tec.nextLine();
-                System.out.println("Digite o CPF do cliente:");
-                String cpf = tec.nextLine();
-                System.out.println("Digite o endereço do cliente:");
-                String endereco = tec.nextLine();
-        
-                cliente = new Cliente(nome_cliente, email_cliente, tel_cliente, endereco, data_nasc, cpf);
-                c.create(cliente);
-                System.out.println("Cliente cadastrado com sucesso.");
-            }
 
                 System.out.println("Informe o CRECI do corretor responsável pelo imóvel:");
                 String creci = tec.nextLine();
@@ -130,6 +89,8 @@ public class Main {
                 tec.nextLine(); 
                 Imovel imovel = new Imovel(cliente, corretor, endereco, tipo, descricao, area, valor_venda, valor_aluguel, ano_construcao);
                 i.create(imovel);
+            }
+        
         
 
             // fim da opção 1 de cadastrar imovel
